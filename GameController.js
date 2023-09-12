@@ -3,7 +3,7 @@ import Player from "./Player.js";
 
 export default class GameController {
     constructor() {
-        this.p = new Player(0, 0, 20, 20, "black");
+        this.p = new Player(600, 0, 20, 20, "black");
         this.map = new Map();
     }
     paintObjects(ctx) {

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas id="canv" width="1350" height="610" style="border: 1px solid #000000"></canvas>
+</body>
+<script type="module" src="Main.js"></script>
+
+</html>import GameController from "./GameController.js";
+
+const canv = document.getElementById("canv");
+const ctx = canv.getContext("2d");
+let dir = 0;
+
+document.addEventListener("keydown", (e) => {
+    switch (e.code) {
+        case 'KeyW':
+            dir = 1;
+            break;
+        case 'KeyA':
+            dir = 2;
+            break;
+        case 'KeyS':
+            dir = 3;
+            break;
+        case 'KeyD':
+            dir = 4;
+            break;
+    }
+});
+let controller = new GameController();
+
+function update() {
+    controller.movePlayer(dir);
+    controller.checkers(dir);
+    repaint();
+    window.requestAnimationFrame(update);
+}
+
+function repaint() {
+    ctx.clearRect(0, 0, canv.clientWidth, canv.clientHeight);
+    controller.paintObjects(ctx);
+}
+
+window.requestAnimationFrame = function() {
+    return window.requestAnimationFrame ||
+      window.webkitRequestAnimationFrame ||
+      window.mozRequestAnimationFrame ||
+      function(callback) {
+        window.setTimeout(callback, 17);
+      };
+  }();
+  
+  window.requestAnimationFrame(update);export default class Player {
+    constructor(x, y, w, h, color) {
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+        this.speed = 2;
+        this.color = color;
+    }
+    paint(ctx) {
+        ctx.beginPath();
+        ctx.fillStyle = this.color;
+        ctx.rect(this.x, this.y, this.w, this.h, this.color);
+        ctx.fill();
+    }
+    collision(t) {
+        if (
+            this.x < t.x + t.h
+            && this.x + this.h > t.x
+            && this.y < t.y + t.h
+            && this.y + this.h > t.y
+        ) {
+            return true;
+        }
+        return false; 
+    }
+    checkWallCollision(map, dir) {
+        map.w.forEach(element => {
+            if(this.collision(element)) {
+                switch (dir) {
+                    case 1:
+                        this.y += this.speed;
+                        break;
+                    case 2:
+                        this.x += this.speed;
+                        break;
+                    case 3:
+                        this.y -= this.speed;
+                        break;
+                    case 4:
+                        this.x -= this.speed;
+                        break;
+
+                }
+            }
+        });
+        
+    }
+}import Map from "./Map.js";
+import Player from "./Player.js";
+
+export default class GameController {
+    constructor() {
+        this.p = new Player(0, 0, 20, 20, "black");
+        this.map = new Map();
+    }
+    paintObjects(ctx) {
+        this.p.paint(ctx);
+        this.map.paint(ctx);
+    }
+    checkers(dir) {
+        this.p.checkWallCollision(this.map, dir);
+    }
+    movePlayer(dir) {
+        switch (dir) {
+            case 1:
+              this.p.y -= this.p.speed;
+              if (this.p.y < 0) this.p.y = 0;
+              break;
+            case 2:
+              this.p.x -= this.p.speed;
+              if (this.p.x < 0) this.p.x = 0;
+              break;
+            case 3:
+              this.p.y += this.p.speed;
+              if (this.p.y > 610) this.p.y = 610;
+              break;
+            case 4:
+              this.p.x += this.p.speed;
+              if (this.p.x > 1330) this.p.x = 1330;
+              break;
+          }
+    }
+}
+import Block from "./Block.js";
+
+export default class Map {
+    constructor() {
+        this.w = [
+          new Block(20, 0),
+          new Block(0, 40),
+          new Block(20, 40),
+          new Block(40, 40),
+          new Block(60, 40),
+          new Block(60, 20),
+          new Block(60, 20),
+          new Block(80, 20),
+          new Block(100, 20),
+          new Block(100, 40),
+          new Block(100, 60),
+          new Block(100, 80),
+          new Block(120, 80),
+
+          new Block(140, 100),
+          new Block(160, 100),
+          new Block(180, 100),
+          new Block(200, 100),
+          new Block(220, 100),
+          new Block(240, 100),
+          new Block(260, 100),
+
+          new Block(140, 0),
+          new Block(140, 20),
+          new Block(140, 40),
+          new Block(160, 40),
+
+          new Block(160, 60),
+          new Block(180, 60),
+          new Block(200, 60),
+          new Block(220, 60),
+          new Block(240, 60),
+          new Block(260, 60),
+          new Block(280, 60),
+
+        ];
+      }
+      paint(ctx) {
+        this.w.forEach(item => {
+          item.paint(ctx);
+        });
+      }
+}
+export default class Block {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.w = 20;
+        this.h = 20;
+    }
+    paint(ctx) {
+        const img = new Image();
+        img.src = "./res/textures.jpeg";
+        ctx.beginPath();
+        ctx.drawImage(img, this.x, this.y, this.w, this.h);
+    }
+}
