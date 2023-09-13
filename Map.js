@@ -10,6 +10,7 @@ export default class Map {
       new Block(620, 0),
       new Block(620, 20),
       new Block(580, 60),
+      new Block(560, 0),
       new Block(580, 40),
       new Block(560, 40),
       new Block(520, 0),
@@ -28,6 +29,15 @@ export default class Map {
       new Block(640, 60),
       new Block(660, 60),
       new Block(660, 40),
+      new Block(620, 100),
+      new Block(620, 120),
+      new Block(620, 140),
+      new Block(620, 160),
+      new Block(600, 160),
+      new Block(560, 140),
+      new Block(540, 160),
+      new Block(520, 180),
+      new Block(580, 180),
     ];
   }
   paint(ctx) {
