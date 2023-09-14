@@ -5,8 +5,8 @@ import Player from "./Player.js";
 export default class GameController {
   constructor(a, map) {
     this.a = a;
-    this.p = new Player(600, 0, 20, 20, "black");
-    this.e = new Enemy(560, 20, 20, 20);
+    this.p = new Player(540, 20, 20, 20, "black");
+    this.e = new Enemy(560, 40, 20, 20);
     this.map = map;
 
   }
