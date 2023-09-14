@@ -25,7 +25,7 @@ export default class Player {
         return false; 
     }
     checkWallCollision(map, dir) {
-        map.w.forEach(element => {
+        map.map.forEach(element => {
             if(this.collision(element)) {
                 switch (dir) {
                     case 1:

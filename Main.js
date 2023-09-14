@@ -1,4 +1,5 @@
 import GameController from "./GameController.js";
+import Map from "./Map.js";
 
 const canv = document.getElementById("canv");
 const ctx = canv.getContext("2d");
@@ -20,7 +21,9 @@ document.addEventListener("keydown", (e) => {
             break;
     }
 });
-let controller = new GameController();
+let map = new Map();
+let a = map.recorrer();
+let controller = new GameController(a, map);
 
 function update() {
     controller.movePlayer(dir);
