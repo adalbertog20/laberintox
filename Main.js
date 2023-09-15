@@ -28,14 +28,14 @@ let controller = new GameController(a, aP, map);
 
 function update() {
     controller.movePlayer(dir);
-    controller.checkers(dir);
     repaint();
+    controller.checkers(dir);
     window.requestAnimationFrame(update);
 }
 
 function repaint() {
     ctx.clearRect(0, 0, canv.clientWidth, canv.clientHeight);
-    controller.paintObjects(ctx);
+    controller.paintObjects(ctx, canv);
 }
 
 window.requestAnimationFrame = function() {

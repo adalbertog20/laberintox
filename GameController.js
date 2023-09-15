@@ -1,6 +1,7 @@
 import Enemy from "./Enemy.js";
 import Fire from "./Fire.js";
 import Player from "./Player.js";
+import Sombra from "./Sombra.js";
 
 
 export default class GameController {
@@ -8,18 +9,20 @@ export default class GameController {
     this.a = a;
     this.aP = aP;
     this.p = new Player(540, 20, 15, 15, "red");
-    this.e = new Enemy(760, 300, 20, 20);
-    this.f = new Fire();
+    this.e = new Enemy(500, 140, 20, 20);
+    this.e2 = new Enemy(540, 40, 32, 32);
+    this.sombra = new Sombra();
     this.map = map;
   }
-  paintObjects(ctx) {
+  paintObjects(ctx, canv) {
     this.map.paint(ctx, this.a, this.aP);
     this.p.paint(ctx);
     this.e.paint(ctx);
-    this.f.paint(ctx);
+    this.sombra.paint(ctx, canv);
   }
   checkers(dir) {
     this.p.checkWallCollision(this.map, dir);
+    this.e.move(this.map);
   }
   movePlayer(dir) {
     switch (dir) {
