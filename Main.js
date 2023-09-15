@@ -23,7 +23,8 @@ document.addEventListener("keydown", (e) => {
 });
 let map = new Map();
 let a = map.recorrer();
-let controller = new GameController(a, map);
+let aP = map.recorrerPiso();
+let controller = new GameController(a, aP, map);
 
 function update() {
     controller.movePlayer(dir);
@@ -45,5 +46,4 @@ window.requestAnimationFrame = function() {
         window.setTimeout(callback, 17);
       };
   }();
-  
-  window.requestAnimationFrame(update);
+window.requestAnimationFrame(update);

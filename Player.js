@@ -8,10 +8,10 @@ export default class Player {
         this.color = color;
     }
     paint(ctx) {
+        const img = new Image();
+        img.src = "./res/player.png";
         ctx.beginPath();
-        ctx.fillStyle = this.color;
-        ctx.rect(this.x, this.y, this.w, this.h, this.color);
-        ctx.fill();
+        ctx.drawImage(img, this.x, this.y, this.w, this.h);
     }
     collision(t) {
         if (
