@@ -1,5 +1,5 @@
 import Enemy from "./Enemy.js";
-import Fire from "./Fire.js";
+import Meta from "./Meta.js";
 import Player from "./Player.js";
 import Sombra from "./Sombra.js";
 
@@ -12,17 +12,34 @@ export default class GameController {
     this.e = new Enemy(500, 140, 20, 20);
     this.e2 = new Enemy(540, 40, 32, 32);
     this.sombra = new Sombra();
+    this.meta = new Meta();
+    this.game = false;
+    this.sonido = new Audio();
     this.map = map;
   }
   paintObjects(ctx, canv) {
     this.map.paint(ctx, this.a, this.aP);
-    this.p.paint(ctx);
     this.e.paint(ctx);
     this.sombra.paint(ctx, canv);
+    this.p.paint(ctx);
+    this.meta.paint(ctx);
   }
-  checkers(dir) {
-    this.p.checkWallCollision(this.map, dir);
-    this.e.move(this.map);
+  checkers(dir, ctx) {
+    if (this.game == false) {
+      this.p.checkWallCollision(this.map, dir);
+      this.e.move(this.map);
+      if (this.meta.checkPlayerCollision(this.p)) {
+        this.game = true;
+      }
+    } else {
+      ctx.beginPath();
+      ctx.fillStyle = "white";
+      ctx.fillRect(0, 0, 800, 600);
+      ctx.fillStyle = "black";
+      ctx.font = "40px serif";
+      ctx.fillText("FELICIDADES!", 250, 200);
+      ctx.fillText("GANASTE!", 280, 240);
+    }
   }
   movePlayer(dir) {
     switch (dir) {

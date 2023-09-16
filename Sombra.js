@@ -7,7 +7,7 @@ export default class Sombra {
             canv.width / 2, canv.height / 2, canv.width / 2
         );
         gradient.addColorStop(0, "rgba(0, 0, 0, 0)");
-        gradient.addColorStop(1, "rgba(0, 0, 0, 19)"); 
+        gradient.addColorStop(1, "rgba(0, 0, 0, 20)"); 
         ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, canv.width, canv.height);
     }

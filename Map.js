@@ -38,6 +38,8 @@ export default class Map {
     ];
     this.map = [];
     this.mapaPiso = [];
+    this.pisoPintado = false;
+    this.paredPintada = false;
   }
   recorrer() {
     for (let i = 0; i < this.w.length; i++) {
@@ -60,11 +62,21 @@ export default class Map {
     return this.mapaPiso;
   }
   paint(ctx, a, aP) {
-    a.forEach(item => {
-      item.paint(ctx);
-    })
-    aP.forEach(item => {
-      item.paint(ctx);
-    })
+    if(this.paredPintada) {
+      a.forEach(item => {
+        item.paint(ctx);
+      });
+    }
+
+    if(this.pisoPintado) {
+      aP.forEach(item => {
+        item.paint(ctx);
+      });
+    }
+    this.pisoPintado = true;
+    this.paredPintada = true;
+  }
+  paintPiso(aP, ctx) {
+    
   }
 }
