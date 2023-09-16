@@ -77,5 +77,10 @@ export default class Enemy {
         } while (newDir == oldDir);
         this.dir = newDir;
     }
-
+    checkCollisionWithPlayer(t) {
+        if(this.collision(t)) {
+            return true;
+        }
+        return false;
+    }
 }
